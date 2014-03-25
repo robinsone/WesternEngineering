@@ -47,7 +47,7 @@ namespace SeedingProgramV2
             {
 
                 string DomainPath = "LDAP://192.168.0.111";
-                DirectoryEntry searchRoot = new DirectoryEntry(DomainPath, "Administrator","4Sparta!");
+                DirectoryEntry searchRoot = new DirectoryEntry(DomainPath, "Administrator","1234567");
                 DirectorySearcher search = new DirectorySearcher(searchRoot);
                 
                 search.Filter = "(&(objectClass=user)(objectCategory=person))";
