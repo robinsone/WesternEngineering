@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Timers;
+using System.Data.OleDb;
+using System.DirectoryServices;
+using System.Collections;
 
 namespace SeedingProgramV2
 {
@@ -23,19 +26,70 @@ namespace SeedingProgramV2
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            progressBar.Style = ProgressBarStyle.Continuous;
             Users.Add(new ADUsers("erobin25", "Eric", "Robinson", "", "Undergrad", "erobin25@uwo.ca", "", "", "", "", true, false));
             Users.Add(new ADUsers("cpaquin2", "Chantal", "Robinson", "", "Undergrad", "erobin25@uwo.ca", "", "", "", "", true, false));
             Users.Add(new ADUsers("ckrik256", "Chris", "Kirk", "", "Grad", "erobin25@uwo.ca", "", "", "", "", true, false));
             Users.Add(new ADUsers("jdagget1", "James", "Dagget", "", "Undergrad", "erobin25@uwo.ca", "", "", "", "", true, false));
-            Users.Add(new ADUsers("dexodus4", "Draktyr", "Exodus", "", "Grad", "erobin25@uwo.ca", "", "", "", "", false, true));
+
+            GetActiveDirectoryStudents();
             ADUsers temp = Users.First(x => x.FirstName == "Eric");
-            ADUsers temp2 = Users.First(x => x.FirstName == "Draktyr");
             temp.ExistsInActiveDirectory = true;
-            temp2.ExistsInCSVFile = true;
             grdUsers.DataSource = Users;
             setRowAppearance();
 
+        }
+
+        private void GetActiveDirectoryStudents()
+        {
+
+            try
+            {
+
+                string DomainPath = "LDAP://192.168.0.111";
+                DirectoryEntry searchRoot = new DirectoryEntry(DomainPath, "Administrator","4Sparta!");
+                DirectorySearcher search = new DirectorySearcher(searchRoot);
+                
+                search.Filter = "(&(objectClass=user)(objectCategory=person))";
+                //search.PropertiesToLoad.Add("samaccountname");
+                //search.PropertiesToLoad.Add("mail"); //email
+                //search.PropertiesToLoad.Add("usergroup");
+                //search.PropertiesToLoad.Add("givenname");//first name
+                //search.PropertiesToLoad.Add("lastname");//last name
+                //search.PropertiesToLoad.Add("displayname");//full name
+                //search.PropertiesToLoad.Add("userprinciplename"); //username
+                //search.PropertiesToLoad.Add("profilepath");//first name
+                //search.PropertiesToLoad.Add("homedirectory");//first name
+                SearchResult result;
+                SearchResultCollection resultCol = search.FindAll();
+                if (resultCol != null)
+                {
+                    for (int counter = 0; counter < resultCol.Count; counter++)
+                    {
+                        string UserNameEmailString = string.Empty;
+                        result = resultCol[counter];
+                        if (result.Properties.Contains("samaccountname") && result.Properties.Contains("mail") && result.Properties.Contains("displayname"))
+                        {
+                            ADUsers objSurveyUsers = new ADUsers();
+                            objSurveyUsers.Email = (String)result.Properties["mail"][0];
+                            objSurveyUsers.FirstName = (String)result.Properties["givenname"][0];
+                            objSurveyUsers.LastName = (String)result.Properties["cn"][0];
+                            objSurveyUsers.MiddleName = (String)result.Properties["initials"][0];
+                            objSurveyUsers.Username = (String)result.Properties["samaccountname"][0];
+                            objSurveyUsers.ProfilePath = (String)result.Properties["profilepath"][0];
+                            objSurveyUsers.HDrive = (String)result.Properties["homedirectory"][0];
+                            objSurveyUsers.LastLogin =  result.Properties["lastlogon"][0].ToString();
+                            objSurveyUsers.ExistsInActiveDirectory = true;
+                            Users.Add(objSurveyUsers);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+
+            }
         }
 
         private void RebindDataSource()
@@ -233,7 +287,7 @@ namespace SeedingProgramV2
 
         delegate void SetStatusBarUpdate(string msg, Color color);
 
-        public void SetStatusBarUpdateMethod(string msg,Color color)
+        public void SetStatusBarUpdateMethod(string msg, Color color)
         {
             lblStatus.Text = msg;
             statusStrip1.BackColor = color;
@@ -291,9 +345,9 @@ namespace SeedingProgramV2
                                 user.LastName = row[2];
                                 user.FirstName = row[3];
                                 user.MiddleName = row[4];
-                                user.Email = row[5];
+                                user.Email = row[5] + "@uwo.ca";
                                 user.ExistsInCSVFile = true;
-                                user.Username = row[5].Substring(0, row[5].IndexOf("@"));
+                                user.Username = row[5];
                                 Users.Add(user);
                                 //parsedData.Add(row);
                             }

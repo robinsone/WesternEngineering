@@ -40,8 +40,8 @@
             this.directorySearcher1 = new System.DirectoryServices.DirectorySearcher();
             this.grdUsers = new System.Windows.Forms.DataGridView();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.progressBar = new System.Windows.Forms.ToolStripProgressBar();
+            this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdUsers)).BeginInit();
             this.statusStrip1.SuspendLayout();
@@ -147,9 +147,10 @@
             // 
             this.grdUsers.BackgroundColor = System.Drawing.SystemColors.Control;
             this.grdUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grdUsers.Location = new System.Drawing.Point(0, 27);
+            this.grdUsers.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.grdUsers.Location = new System.Drawing.Point(0, 24);
             this.grdUsers.Name = "grdUsers";
-            this.grdUsers.Size = new System.Drawing.Size(828, 503);
+            this.grdUsers.Size = new System.Drawing.Size(828, 531);
             this.grdUsers.StandardTab = true;
             this.grdUsers.TabIndex = 1;
             // 
@@ -164,16 +165,16 @@
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
             // 
-            // lblStatus
-            // 
-            this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(118, 17);
-            this.lblStatus.Text = "toolStripStatusLabel1";
-            // 
             // progressBar
             // 
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(100, 16);
+            this.progressBar.Visible = false;
+            // 
+            // lblStatus
+            // 
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(0, 17);
             // 
             // Form1
             // 
