@@ -17,8 +17,14 @@ namespace SeedingProgramV2
         private string _grad;
         private string _profilePath;
         private string _hdrive;
-        private string _lastLogin;
+        private DateTime _lastLogin;
         private string _old;
+        private string _path;
+        private byte[] _sid;
+
+
+
+      
         private Boolean _existsInActiveDirectory;
         private Boolean _existsInCSVFile;
         
@@ -27,7 +33,7 @@ namespace SeedingProgramV2
 
         public ADUsers() { }
 
-        public ADUsers(string UserName, string FirstName, string LastName, string MiddleName, string Grad, string Email, string ProfilePath, string HDrive, string LastLogin, string old, Boolean ExistsInActiveDirectory, Boolean ExistsInCSVFile)
+        public ADUsers(string UserName, string FirstName, string LastName, string MiddleName, string Grad, string Email, string ProfilePath, string HDrive, DateTime LastLogin, string old, Boolean ExistsInActiveDirectory, Boolean ExistsInCSVFile)
         {
             this._username = UserName;
             this._firstName = FirstName;
@@ -100,7 +106,7 @@ namespace SeedingProgramV2
             set { _hdrive = value; }
         }
 
-        public string LastLogin
+        public DateTime LastLogin
         {
             get { return _lastLogin; }
             set { _lastLogin = value; }
@@ -123,6 +129,18 @@ namespace SeedingProgramV2
             get { return _existsInCSVFile; }
             set { _existsInCSVFile = value; }
         }
+
+        public string Path
+        {
+            get { return _path; }
+            set { _path = value; }
+        }
+
+        public byte[] Sid
+        {
+            get { return _sid; }
+            set { _sid = value; }
+        } 
 
     }
 }
