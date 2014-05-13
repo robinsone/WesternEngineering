@@ -20,12 +20,12 @@ using JDStuart.DirectoryUtils;
 
 namespace SeedingProgramV2
 {
-    public partial class Form1 : Form
+    public partial class MainApp : Form
     {
         private static SortableBindingList<ADUsers> Users = new SortableBindingList<ADUsers>();
         private static DirectoryInfo[] folders;
 
-        public Form1()
+        public MainApp()
         {
             InitializeComponent();
         }
