@@ -12,13 +12,8 @@ namespace SeedingProgramV2
 {
     public partial class Parameters : Form
     {
-        private static @params _Params;
-
-        public @params Params
-        {
-            get { return _Params; }
-            set { _Params = value; }
-        }
+       
+        public ProgParams ProgParams = new ProgParams();
 
         public Parameters()
         {
@@ -27,9 +22,7 @@ namespace SeedingProgramV2
 
         private void button1_Click(object sender, EventArgs e)
         {
-            this.Params.ServerConnectionString = txtConnectionString.Text;
-
-            
+            this.ProgParams.ServerConnectionString = txtConnectionString.Text;
             this.DialogResult = DialogResult.OK;
         }
 

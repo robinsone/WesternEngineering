@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace SeedingProgramV2
 {
-    class @params
+    public class ProgParams
     {
-        string _ServerConnectionString;
+
+        public ProgParams() { }
+
+        private string _ServerConnectionString;
 
         public string ServerConnectionString
         {
@@ -16,5 +19,6 @@ namespace SeedingProgramV2
             set { _ServerConnectionString = value; }
         }
         
+
     }
 }

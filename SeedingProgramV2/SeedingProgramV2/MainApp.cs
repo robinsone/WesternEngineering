@@ -1143,5 +1143,10 @@ namespace SeedingProgramV2
             grdUsers.Refresh();
             impersonator.undoimpersonateUser();
         }
+
+        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Parameters frmParams = new Parameters();
+        }
     }
 }

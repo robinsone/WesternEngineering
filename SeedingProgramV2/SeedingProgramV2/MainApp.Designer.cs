@@ -41,6 +41,8 @@
             this.actionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.chooseOUToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addAllToADToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.backupOldUsersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteBackupSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripComboBox1 = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripTextBox2 = new System.Windows.Forms.ToolStripTextBox();
@@ -55,8 +57,8 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.progressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.backupOldUsersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteBackupSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdUsers)).BeginInit();
             this.GridContextMenu.SuspendLayout();
@@ -70,6 +72,7 @@
             this.fileToolStripMenuItem,
             this.viewToolStripMenuItem,
             this.actionsToolStripMenuItem,
+            this.toolsToolStripMenuItem,
             this.toolStripTextBox1,
             this.toolStripComboBox1,
             this.toolStripTextBox2,
@@ -173,16 +176,30 @@
             // chooseOUToolStripMenuItem
             // 
             this.chooseOUToolStripMenuItem.Name = "chooseOUToolStripMenuItem";
-            this.chooseOUToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.chooseOUToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             this.chooseOUToolStripMenuItem.Text = "Add Selected to AD";
             this.chooseOUToolStripMenuItem.Click += new System.EventHandler(this.chooseOUToolStripMenuItem_Click);
             // 
             // addAllToADToolStripMenuItem
             // 
             this.addAllToADToolStripMenuItem.Name = "addAllToADToolStripMenuItem";
-            this.addAllToADToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.addAllToADToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             this.addAllToADToolStripMenuItem.Text = "Add All to AD";
             this.addAllToADToolStripMenuItem.Click += new System.EventHandler(this.addAllToADToolStripMenuItem_Click);
+            // 
+            // backupOldUsersToolStripMenuItem
+            // 
+            this.backupOldUsersToolStripMenuItem.Name = "backupOldUsersToolStripMenuItem";
+            this.backupOldUsersToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            this.backupOldUsersToolStripMenuItem.Text = "Backup Old Users";
+            this.backupOldUsersToolStripMenuItem.Click += new System.EventHandler(this.backupOldUsersToolStripMenuItem_Click);
+            // 
+            // deleteBackupSelectedToolStripMenuItem
+            // 
+            this.deleteBackupSelectedToolStripMenuItem.Name = "deleteBackupSelectedToolStripMenuItem";
+            this.deleteBackupSelectedToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            this.deleteBackupSelectedToolStripMenuItem.Text = "Delete/Backup Selected";
+            this.deleteBackupSelectedToolStripMenuItem.Click += new System.EventHandler(this.deleteBackupSelectedToolStripMenuItem_Click);
             // 
             // toolStripTextBox1
             // 
@@ -202,7 +219,7 @@
             this.toolStripComboBox1.MaxDropDownItems = 15;
             this.toolStripComboBox1.Name = "toolStripComboBox1";
             this.toolStripComboBox1.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
-            this.toolStripComboBox1.Size = new System.Drawing.Size(175, 23);
+            this.toolStripComboBox1.Size = new System.Drawing.Size(165, 23);
             // 
             // toolStripTextBox2
             // 
@@ -268,14 +285,14 @@
             // addToADToolStripMenuItem
             // 
             this.addToADToolStripMenuItem.Name = "addToADToolStripMenuItem";
-            this.addToADToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.addToADToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.addToADToolStripMenuItem.Text = "Add to AD";
             this.addToADToolStripMenuItem.Click += new System.EventHandler(this.addToADToolStripMenuItem_Click);
             // 
             // copyInformationToolStripMenuItem
             // 
             this.copyInformationToolStripMenuItem.Name = "copyInformationToolStripMenuItem";
-            this.copyInformationToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.copyInformationToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.copyInformationToolStripMenuItem.Text = "Copy Information";
             this.copyInformationToolStripMenuItem.Click += new System.EventHandler(this.copyInformationToolStripMenuItem_Click);
             // 
@@ -301,21 +318,22 @@
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(0, 17);
             // 
-            // backupOldUsersToolStripMenuItem
+            // toolsToolStripMenuItem
             // 
-            this.backupOldUsersToolStripMenuItem.Name = "backupOldUsersToolStripMenuItem";
-            this.backupOldUsersToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
-            this.backupOldUsersToolStripMenuItem.Text = "Backup Old Users";
-            this.backupOldUsersToolStripMenuItem.Click += new System.EventHandler(this.backupOldUsersToolStripMenuItem_Click);
+            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.optionsToolStripMenuItem});
+            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 23);
+            this.toolsToolStripMenuItem.Text = "Tools";
             // 
-            // deleteBackupSelectedToolStripMenuItem
+            // optionsToolStripMenuItem
             // 
-            this.deleteBackupSelectedToolStripMenuItem.Name = "deleteBackupSelectedToolStripMenuItem";
-            this.deleteBackupSelectedToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
-            this.deleteBackupSelectedToolStripMenuItem.Text = "Delete/Backup Selected";
-            this.deleteBackupSelectedToolStripMenuItem.Click += new System.EventHandler(this.deleteBackupSelectedToolStripMenuItem_Click);
+            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.optionsToolStripMenuItem.Text = "Options";
+            this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
             // 
-            // Form1
+            // MainApp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -324,7 +342,7 @@
             this.Controls.Add(this.grdUsers);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "Form1";
+            this.Name = "MainApp";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
@@ -368,6 +386,8 @@
         private System.Windows.Forms.ToolStripMenuItem copyInformationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem backupOldUsersToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteBackupSelectedToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
     }
 }
 
