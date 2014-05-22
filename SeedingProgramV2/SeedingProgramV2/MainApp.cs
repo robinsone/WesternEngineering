@@ -144,7 +144,7 @@ namespace SeedingProgramV2
                 List<OU> grad = new List<OU>();
                 List<OU> ugrad = new List<OU>();
 
-                string DomainPath = ProgParams.ServerConnectionString;
+                string DomainPath = "LDAP:// " + ProgParams.ServerConnectionString;
                 DirectoryEntry searchRoot = new DirectoryEntry(DomainPath, "Administrator", "1234567");
                 DirectorySearcher search = new DirectorySearcher(searchRoot);
 
@@ -913,7 +913,7 @@ namespace SeedingProgramV2
             {
                 if (user.ProfilePath != null && user.HDrive != null)
                 {
-                    string DomainPath = ProgParams.ServerConnectionString;
+                    string DomainPath = "LDAP:// " + ProgParams.ServerConnectionString;
                     DirectoryEntry searchRoot = new DirectoryEntry(DomainPath, "Administrator", "1234567");
                     DirectorySearcher search = new DirectorySearcher(searchRoot);
 
@@ -1056,7 +1056,7 @@ namespace SeedingProgramV2
                         {
                             if (user.ProfilePath != null && user.HDrive != null)
                             {
-                                string DomainPath = ProgParams.ServerConnectionString;
+                                string DomainPath = "LDAP:// " + ProgParams.ServerConnectionString;
                                 DirectoryEntry searchRoot = new DirectoryEntry(DomainPath, "Administrator", "1234567");
                                 DirectorySearcher search = new DirectorySearcher(searchRoot);
 
@@ -1110,7 +1110,7 @@ namespace SeedingProgramV2
                     {
                         if (user.ProfilePath != null && user.HDrive != null)
                         {
-                            string DomainPath = ProgParams.ServerConnectionString;
+                            string DomainPath = "LDAP:// " + ProgParams.ServerConnectionString;
                             DirectoryEntry searchRoot = new DirectoryEntry(DomainPath, "Administrator", "1234567");
                             DirectorySearcher search = new DirectorySearcher(searchRoot);
 
