@@ -1,5 +1,7 @@
 WesternEngineering
 ==================
 
-Run the application by going to:
-WesternEngineering / SeedingProgramV2 / SeedingProgramV2 / bin / Debug / SeedingProgramV2.exe
+#### Disclaimer ####
+This program is still in BETA. Please report back any issues you find using this GitHub repository. 
+
+Download the entire .zip folder. 
