@@ -24,6 +24,7 @@ namespace SeedingProgramV2
     {
         private static SortableBindingList<ADUsers> Users = new SortableBindingList<ADUsers>();
         private static DirectoryInfo[] folders;
+        private static ProgParams ProgParams = new ProgParams();
 
         public MainApp()
         {
@@ -32,103 +33,108 @@ namespace SeedingProgramV2
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //addPsHs();
-            grdUsers.AutoGenerateColumns = false;
+           
+        }
+
+        private void loadProgParams()
+        {
+            ProgParams = ProgParams.Load();
+            if (!ProgParams.IsSet)
+            {
+                Parameters frmParams = new Parameters();
+                frmParams.ShowDialog();
+                if (frmParams.DialogResult == DialogResult.OK)
+                {
+                    ProgParams = frmParams.getParams();
+                }
+            }
             
-            progressBar.Style = ProgressBarStyle.Continuous;
-            GetActiveDirectoryStudents();
-            getSharedFolder();
-            GetActiveDirectoryOUs();
-            grdUsers.DataSource = Users;
-            setContextMeny();
-            AddColumns();
-            //setRowAppearance();
         }
 
         private void setContextMeny()
         {
-            
+
         }
 
         private void AddColumns()
         {
-            
 
-            
-                DataGridViewTextBoxColumn idColumn = new DataGridViewTextBoxColumn();
-                idColumn.Name = "User Name";
-                idColumn.DataPropertyName = "username";
-                idColumn.ReadOnly = true;
 
-                grdUsers.Columns.Add(idColumn);
 
-                idColumn = new DataGridViewTextBoxColumn();
-                idColumn.Name = "FirstName";
-                idColumn.DataPropertyName = "FirstName";
-                idColumn.ReadOnly = true;
+            DataGridViewTextBoxColumn idColumn = new DataGridViewTextBoxColumn();
+            idColumn.Name = "User Name";
+            idColumn.DataPropertyName = "username";
+            idColumn.ReadOnly = true;
 
-                grdUsers.Columns.Add(idColumn);
+            grdUsers.Columns.Add(idColumn);
 
-                idColumn = new DataGridViewTextBoxColumn();
-                idColumn.Name = "Middle Name";
-                idColumn.DataPropertyName = "middleName";
-                idColumn.ReadOnly = true;
+            idColumn = new DataGridViewTextBoxColumn();
+            idColumn.Name = "FirstName";
+            idColumn.DataPropertyName = "FirstName";
+            idColumn.ReadOnly = true;
 
-                grdUsers.Columns.Add(idColumn);
+            grdUsers.Columns.Add(idColumn);
 
-                idColumn = new DataGridViewTextBoxColumn();
-                idColumn.Name = "Last Name";
-                idColumn.DataPropertyName = "Lastname";
-                idColumn.ReadOnly = true;
+            idColumn = new DataGridViewTextBoxColumn();
+            idColumn.Name = "Middle Name";
+            idColumn.DataPropertyName = "middleName";
+            idColumn.ReadOnly = true;
 
-                grdUsers.Columns.Add(idColumn);
-                idColumn = new DataGridViewTextBoxColumn();
-                idColumn.Name = "Email";
-                idColumn.DataPropertyName = "Email";
-                idColumn.ReadOnly = true;
+            grdUsers.Columns.Add(idColumn);
 
-                grdUsers.Columns.Add(idColumn);
+            idColumn = new DataGridViewTextBoxColumn();
+            idColumn.Name = "Last Name";
+            idColumn.DataPropertyName = "Lastname";
+            idColumn.ReadOnly = true;
 
-                idColumn = new DataGridViewTextBoxColumn();
-                idColumn.Name = "Grad";
-                idColumn.DataPropertyName = "grad";
-                idColumn.ReadOnly = true;
+            grdUsers.Columns.Add(idColumn);
+            idColumn = new DataGridViewTextBoxColumn();
+            idColumn.Name = "Email";
+            idColumn.DataPropertyName = "Email";
+            idColumn.ReadOnly = true;
 
-                grdUsers.Columns.Add(idColumn);
+            grdUsers.Columns.Add(idColumn);
 
-                idColumn = new DataGridViewTextBoxColumn();
-                idColumn.Name = "Password";
-                idColumn.DataPropertyName = "password";
-                idColumn.ReadOnly = true;
+            idColumn = new DataGridViewTextBoxColumn();
+            idColumn.Name = "Grad";
+            idColumn.DataPropertyName = "grad";
+            idColumn.ReadOnly = true;
 
-                grdUsers.Columns.Add(idColumn);
+            grdUsers.Columns.Add(idColumn);
 
-               
+            idColumn = new DataGridViewTextBoxColumn();
+            idColumn.Name = "Password";
+            idColumn.DataPropertyName = "password";
+            idColumn.ReadOnly = true;
 
-                idColumn = new DataGridViewTextBoxColumn();
-                idColumn.Name = "Profile Path";
-                idColumn.DataPropertyName = "profilepath";
-                idColumn.ReadOnly = true;
+            grdUsers.Columns.Add(idColumn);
 
-                grdUsers.Columns.Add(idColumn);
 
-                idColumn = new DataGridViewTextBoxColumn();
-                idColumn.Name = "H: Drive";
-                idColumn.DataPropertyName = "hdrive";
-                idColumn.ReadOnly = true;
 
-                grdUsers.Columns.Add(idColumn);
+            idColumn = new DataGridViewTextBoxColumn();
+            idColumn.Name = "Profile Path";
+            idColumn.DataPropertyName = "profilepath";
+            idColumn.ReadOnly = true;
 
-                idColumn = new DataGridViewTextBoxColumn();
-                idColumn.Name = "Last Logged";
-                idColumn.DataPropertyName = "lastLogin";
-                idColumn.ReadOnly = true;
+            grdUsers.Columns.Add(idColumn);
 
-                grdUsers.Columns.Add(idColumn);
+            idColumn = new DataGridViewTextBoxColumn();
+            idColumn.Name = "H: Drive";
+            idColumn.DataPropertyName = "hdrive";
+            idColumn.ReadOnly = true;
 
-                grdUsers.AutoResizeColumns();
-            
-           
+            grdUsers.Columns.Add(idColumn);
+
+            idColumn = new DataGridViewTextBoxColumn();
+            idColumn.Name = "Last Logged";
+            idColumn.DataPropertyName = "lastLogin";
+            idColumn.ReadOnly = true;
+
+            grdUsers.Columns.Add(idColumn);
+
+            grdUsers.AutoResizeColumns();
+
+
         }
 
         private void GetActiveDirectoryOUs()
@@ -138,7 +144,7 @@ namespace SeedingProgramV2
                 List<OU> grad = new List<OU>();
                 List<OU> ugrad = new List<OU>();
 
-                string DomainPath = "LDAP://192.168.0.111";
+                string DomainPath = ProgParams.ServerConnectionString;
                 DirectoryEntry searchRoot = new DirectoryEntry(DomainPath, "Administrator", "1234567");
                 DirectorySearcher search = new DirectorySearcher(searchRoot);
 
@@ -196,7 +202,7 @@ namespace SeedingProgramV2
             try
             {
 
-                string DomainPath = "LDAP://192.168.0.111";
+                string DomainPath = "LDAP:// " + ProgParams.ServerConnectionString;
                 DirectoryEntry searchRoot = new DirectoryEntry(DomainPath, "Administrator", "1234567");
                 DirectorySearcher search = new DirectorySearcher(searchRoot);
 
@@ -227,7 +233,7 @@ namespace SeedingProgramV2
                             objSurveyUsers.Email = (String)result.Properties["mail"][0];
                             objSurveyUsers.FirstName = (String)result.Properties["givenname"][0];
                             objSurveyUsers.LastName = (String)result.Properties["sn"][0];
-                            if (result.Properties.Contains("initials")) {objSurveyUsers.MiddleName = (String)result.Properties["initials"][0];}
+                            if (result.Properties.Contains("initials")) { objSurveyUsers.MiddleName = (String)result.Properties["initials"][0]; }
                             objSurveyUsers.Username = (String)result.Properties["samaccountname"][0];
                             objSurveyUsers.ProfilePath = (String)result.Properties["profilepath"][0];
                             objSurveyUsers.HDrive = (String)result.Properties["homedirectory"][0];
@@ -241,7 +247,8 @@ namespace SeedingProgramV2
                                 objSurveyUsers.Grad = "GRAD";
                             }
                             objSurveyUsers.ExistsInActiveDirectory = true;
-                            if (objSurveyUsers != null) { 
+                            if (objSurveyUsers != null)
+                            {
                                 Users.Add(objSurveyUsers);
                             }
                         }
@@ -565,7 +572,7 @@ namespace SeedingProgramV2
                 impersonator.impersonateUser("administrator", "", "1234567"); //No Domain is required
 
 
-                DirectoryInfo directory = new DirectoryInfo(@"\\192.168.0.111\shared\");
+                DirectoryInfo directory = new DirectoryInfo(ProgParams.FolderPath);
 
                 folders = directory.GetDirectories();
                 impersonator.undoimpersonateUser();
@@ -582,7 +589,7 @@ namespace SeedingProgramV2
             impersonator.impersonateUser("administrator", "", "1234567"); //No Domain is required
 
 
-            DirectoryInfo directory = new DirectoryInfo(@"\\192.168.0.111\shared\");
+            DirectoryInfo directory = new DirectoryInfo(ProgParams.FolderPath);
 
             folders = directory.GetDirectories();
 
@@ -683,7 +690,7 @@ namespace SeedingProgramV2
 
                 }
 
-                
+
                 MessageBox.Show("Users added to active directory successfully.");
                 impersonator.undoimpersonateUser();
             }
@@ -833,7 +840,7 @@ namespace SeedingProgramV2
         }
 
         private void addToADToolStripMenuItem_Click(object sender, EventArgs e)
-        {            
+        {
             ADUsers user = (ADUsers)grdUsers.Rows[mouseLocation.RowIndex].DataBoundItem;
             UserImpersonation impersonator = new UserImpersonation();
             impersonator.impersonateUser("administrator", "", "1234567"); //No Domain is required
@@ -871,7 +878,7 @@ namespace SeedingProgramV2
                     user.ExistsInActiveDirectory = true;
                     SetFolders(user);
 
-                    
+
                 }
                 else
                 {
@@ -894,7 +901,7 @@ namespace SeedingProgramV2
                 user.ProfilePath + ", " +
                 user.HDrive;
             Clipboard.SetText(output);
-               
+
         }
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -906,11 +913,11 @@ namespace SeedingProgramV2
             {
                 if (user.ProfilePath != null && user.HDrive != null)
                 {
-                    string DomainPath = "LDAP://192.168.0.111";
+                    string DomainPath = ProgParams.ServerConnectionString;
                     DirectoryEntry searchRoot = new DirectoryEntry(DomainPath, "Administrator", "1234567");
                     DirectorySearcher search = new DirectorySearcher(searchRoot);
 
-                    search.Filter = "(&(objectClass=user)(objectCategory=person)(CN="+user.Username+"))";
+                    search.Filter = "(&(objectClass=user)(objectCategory=person)(CN=" + user.Username + "))";
                     SearchResult result;
                     SearchResultCollection resultCol = search.FindAll();
                     if (resultCol != null)
@@ -949,7 +956,7 @@ namespace SeedingProgramV2
             impersonator.impersonateUser("administrator", "", "1234567"); //No Domain is required
             try
             {
-               
+
                 string dest = @"\\192.168.0.111\backups\" + user.Username;
                 System.IO.Directory.CreateDirectory(dest);
                 System.IO.Directory.CreateDirectory(dest + "\\HDrive");
@@ -1033,7 +1040,7 @@ namespace SeedingProgramV2
 
         private void backupOldUsersToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+
             UserImpersonation impersonator = new UserImpersonation();
             impersonator.impersonateUser("administrator", "eng.western", "1234567"); //No Domain is required
             foreach (DataGridViewRow row in grdUsers.Rows)
@@ -1049,7 +1056,7 @@ namespace SeedingProgramV2
                         {
                             if (user.ProfilePath != null && user.HDrive != null)
                             {
-                                string DomainPath = "LDAP://192.168.0.111";
+                                string DomainPath = ProgParams.ServerConnectionString;
                                 DirectoryEntry searchRoot = new DirectoryEntry(DomainPath, "Administrator", "1234567");
                                 DirectorySearcher search = new DirectorySearcher(searchRoot);
 
@@ -1070,7 +1077,7 @@ namespace SeedingProgramV2
                                             searchRoot.CommitChanges();
                                             moveFolderToBackup(user);
                                             Users.Remove(user);
-                                            
+
                                         }
                                     }
                                 }
@@ -1098,44 +1105,44 @@ namespace SeedingProgramV2
                 //string readableLastLogon = DateTime.FromFileTime(Convert.ToInt64(user.LastLogin)).ToString();
                 if (user != null)
                 {
-                    
-                        if (user.ExistsInActiveDirectory)
-                        {
-                            if (user.ProfilePath != null && user.HDrive != null)
-                            {
-                                string DomainPath = "LDAP://192.168.0.111";
-                                DirectoryEntry searchRoot = new DirectoryEntry(DomainPath, "Administrator", "1234567");
-                                DirectorySearcher search = new DirectorySearcher(searchRoot);
 
-                                search.Filter = "(&(objectClass=user)(objectCategory=person)(CN=" + user.Username + "))";
-                                SearchResult result;
-                                SearchResultCollection resultCol = search.FindAll();
-                                if (resultCol != null)
+                    if (user.ExistsInActiveDirectory)
+                    {
+                        if (user.ProfilePath != null && user.HDrive != null)
+                        {
+                            string DomainPath = ProgParams.ServerConnectionString;
+                            DirectoryEntry searchRoot = new DirectoryEntry(DomainPath, "Administrator", "1234567");
+                            DirectorySearcher search = new DirectorySearcher(searchRoot);
+
+                            search.Filter = "(&(objectClass=user)(objectCategory=person)(CN=" + user.Username + "))";
+                            SearchResult result;
+                            SearchResultCollection resultCol = search.FindAll();
+                            if (resultCol != null)
+                            {
+                                for (int counter = 0; counter < resultCol.Count; counter++)
                                 {
-                                    for (int counter = 0; counter < resultCol.Count; counter++)
+                                    string UserNameEmailString = string.Empty;
+                                    result = resultCol[counter];
+                                    if (result.Properties.Contains("samaccountname") && result.Properties.Contains("mail") && result.Path.Contains("students"))
                                     {
-                                        string UserNameEmailString = string.Empty;
-                                        result = resultCol[counter];
-                                        if (result.Properties.Contains("samaccountname") && result.Properties.Contains("mail") && result.Path.Contains("students"))
-                                        {
-                                            string parentOU = user.Path.Replace("CN=" + user.Username + ",", "");
-                                            DirectoryEntry de = new DirectoryEntry(parentOU);
-                                            de.Children.Remove(result.GetDirectoryEntry());
-                                            searchRoot.CommitChanges();
-                                            moveFolderToBackup(user);
-                                            Users.Remove(user);
-                                            
-                                        }
+                                        string parentOU = user.Path.Replace("CN=" + user.Username + ",", "");
+                                        DirectoryEntry de = new DirectoryEntry(parentOU);
+                                        de.Children.Remove(result.GetDirectoryEntry());
+                                        searchRoot.CommitChanges();
+                                        moveFolderToBackup(user);
+                                        Users.Remove(user);
+
                                     }
                                 }
                             }
-                            else
-                            {
-                                MessageBox.Show("Please set OU group for user");
-                            }
-
                         }
+                        else
+                        {
+                            MessageBox.Show("Please set OU group for user");
+                        }
+
                     }
+                }
 
             }
 
@@ -1147,6 +1154,35 @@ namespace SeedingProgramV2
         private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Parameters frmParams = new Parameters();
+            frmParams.ShowDialog();
+            if (frmParams.DialogResult == DialogResult.OK)
+            {
+                ProgParams = frmParams.getParams();
+            }
+        }
+
+        private void connectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //addPsHs();
+            clearForm();
+            loadProgParams();
+            grdUsers.AutoGenerateColumns = false;
+            progressBar.Style = ProgressBarStyle.Continuous;
+
+            GetActiveDirectoryStudents();
+            getSharedFolder();
+            GetActiveDirectoryOUs();
+            grdUsers.DataSource = Users;
+            setContextMeny();
+            AddColumns();
+            //setRowAppearance();
+        }
+
+        private void clearForm()
+        {
+            Users.Clear();
+            grdUsers.DataSource = "";
+            
         }
     }
 }
