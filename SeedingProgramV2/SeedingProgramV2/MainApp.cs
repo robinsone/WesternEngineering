@@ -145,7 +145,7 @@ namespace SeedingProgramV2
                 List<OU> ugrad = new List<OU>();
 
                 string DomainPath = "LDAP:// " + ProgParams.ServerConnectionString;
-                DirectoryEntry searchRoot = new DirectoryEntry(DomainPath, "Administrator", "1234567");
+                DirectoryEntry searchRoot = new DirectoryEntry(DomainPath, ProgParams.UserAccount, ProgParams.UserPassword);
                 DirectorySearcher search = new DirectorySearcher(searchRoot);
 
                 search.Filter = "(objectCategory=organizationalUnit)";
@@ -203,7 +203,7 @@ namespace SeedingProgramV2
             {
 
                 string DomainPath = "LDAP:// " + ProgParams.ServerConnectionString;
-                DirectoryEntry searchRoot = new DirectoryEntry(DomainPath, "Administrator", "1234567");
+                DirectoryEntry searchRoot = new DirectoryEntry(DomainPath, ProgParams.UserAccount, ProgParams.UserPassword);
                 DirectorySearcher search = new DirectorySearcher(searchRoot);
 
                 search.Filter = "(&(objectClass=user)(objectCategory=person))";
@@ -569,7 +569,7 @@ namespace SeedingProgramV2
             try
             {
                 UserImpersonation impersonator = new UserImpersonation();
-                impersonator.impersonateUser("administrator", "", "1234567"); //No Domain is required
+                impersonator.impersonateUser(ProgParams.UserAccount, "", ProgParams.UserPassword); //No Domain is required
 
 
                 DirectoryInfo directory = new DirectoryInfo(ProgParams.FolderPath);
@@ -586,7 +586,7 @@ namespace SeedingProgramV2
         private void addPsHs()
         {
             UserImpersonation impersonator = new UserImpersonation();
-            impersonator.impersonateUser("administrator", "", "1234567"); //No Domain is required
+            impersonator.impersonateUser(ProgParams.UserAccount, "", ProgParams.UserPassword); //No Domain is required
 
 
             DirectoryInfo directory = new DirectoryInfo(ProgParams.FolderPath);
@@ -641,7 +641,7 @@ namespace SeedingProgramV2
             try
             {
                 UserImpersonation impersonator = new UserImpersonation();
-                impersonator.impersonateUser("administrator", "", "1234567"); //No Domain is required
+                impersonator.impersonateUser(ProgParams.UserAccount, "", ProgParams.UserPassword); //No Domain is required
                 foreach (DataGridViewRow row in grdUsers.SelectedRows)
                 {
 
@@ -706,7 +706,7 @@ namespace SeedingProgramV2
             try
             {
                 UserImpersonation impersonator = new UserImpersonation();
-                impersonator.impersonateUser("administrator", "", "1234567"); //No Domain is required
+                impersonator.impersonateUser(ProgParams.UserAccount, "", ProgParams.UserPassword); //No Domain is required
                 foreach (DataGridViewRow row in grdUsers.Rows)
                 {
 
@@ -772,7 +772,7 @@ namespace SeedingProgramV2
         private void SetFolders(ADUsers user)
         {
             UserImpersonation impersonator = new UserImpersonation();
-            impersonator.impersonateUser("administrator", "", "1234567"); //No Domain is required
+            impersonator.impersonateUser(ProgParams.UserAccount, "", ProgParams.UserPassword); //No Domain is required
 
             System.IO.Directory.CreateDirectory(user.HDrive);
 
@@ -843,7 +843,7 @@ namespace SeedingProgramV2
         {
             ADUsers user = (ADUsers)grdUsers.Rows[mouseLocation.RowIndex].DataBoundItem;
             UserImpersonation impersonator = new UserImpersonation();
-            impersonator.impersonateUser("administrator", "", "1234567"); //No Domain is required
+            impersonator.impersonateUser(ProgParams.UserAccount, "", ProgParams.UserPassword); //No Domain is required
             if (!user.ExistsInActiveDirectory)
             {
                 if (user.ProfilePath != null && user.HDrive != null)
@@ -908,13 +908,13 @@ namespace SeedingProgramV2
         {
             ADUsers user = (ADUsers)grdUsers.Rows[mouseLocation.RowIndex].DataBoundItem;
             UserImpersonation impersonator = new UserImpersonation();
-            impersonator.impersonateUser("administrator", "eng.western", "1234567"); //No Domain is required
+            impersonator.impersonateUser(ProgParams.UserAccount, "", ProgParams.UserPassword); //No Domain is required
             if (user.ExistsInActiveDirectory)
             {
                 if (user.ProfilePath != null && user.HDrive != null)
                 {
                     string DomainPath = "LDAP:// " + ProgParams.ServerConnectionString;
-                    DirectoryEntry searchRoot = new DirectoryEntry(DomainPath, "Administrator", "1234567");
+                    DirectoryEntry searchRoot = new DirectoryEntry(DomainPath, ProgParams.UserAccount, ProgParams.UserPassword);
                     DirectorySearcher search = new DirectorySearcher(searchRoot);
 
                     search.Filter = "(&(objectClass=user)(objectCategory=person)(CN=" + user.Username + "))";
@@ -953,7 +953,7 @@ namespace SeedingProgramV2
         private void moveFolderToBackup(ADUsers user)
         {
             UserImpersonation impersonator = new UserImpersonation();
-            impersonator.impersonateUser("administrator", "", "1234567"); //No Domain is required
+            impersonator.impersonateUser(ProgParams.UserAccount, "", ProgParams.UserPassword);//No Domain is required
             try
             {
 
@@ -1042,7 +1042,7 @@ namespace SeedingProgramV2
         {
 
             UserImpersonation impersonator = new UserImpersonation();
-            impersonator.impersonateUser("administrator", "eng.western", "1234567"); //No Domain is required
+            impersonator.impersonateUser(ProgParams.UserAccount, "", ProgParams.UserPassword); //No Domain is required
             foreach (DataGridViewRow row in grdUsers.Rows)
             {
                 ADUsers user = (ADUsers)row.DataBoundItem;
@@ -1057,7 +1057,7 @@ namespace SeedingProgramV2
                             if (user.ProfilePath != null && user.HDrive != null)
                             {
                                 string DomainPath = "LDAP:// " + ProgParams.ServerConnectionString;
-                                DirectoryEntry searchRoot = new DirectoryEntry(DomainPath, "Administrator", "1234567");
+                                DirectoryEntry searchRoot = new DirectoryEntry(DomainPath, ProgParams.UserAccount, ProgParams.UserPassword);
                                 DirectorySearcher search = new DirectorySearcher(searchRoot);
 
                                 search.Filter = "(&(objectClass=user)(objectCategory=person)(CN=" + user.Username + "))";
@@ -1098,7 +1098,7 @@ namespace SeedingProgramV2
         private void deleteBackupSelectedToolStripMenuItem_Click(object sender, EventArgs e)
         {
             UserImpersonation impersonator = new UserImpersonation();
-            impersonator.impersonateUser("administrator", "eng.western", "1234567"); //No Domain is required
+            impersonator.impersonateUser(ProgParams.UserAccount, "", ProgParams.UserPassword); //No Domain is required
             foreach (DataGridViewRow row in grdUsers.SelectedRows)
             {
                 ADUsers user = (ADUsers)row.DataBoundItem;
@@ -1111,7 +1111,7 @@ namespace SeedingProgramV2
                         if (user.ProfilePath != null && user.HDrive != null)
                         {
                             string DomainPath = "LDAP:// " + ProgParams.ServerConnectionString;
-                            DirectoryEntry searchRoot = new DirectoryEntry(DomainPath, "Administrator", "1234567");
+                            DirectoryEntry searchRoot = new DirectoryEntry(DomainPath, ProgParams.UserAccount, ProgParams.UserPassword);
                             DirectorySearcher search = new DirectorySearcher(searchRoot);
 
                             search.Filter = "(&(objectClass=user)(objectCategory=person)(CN=" + user.Username + "))";
