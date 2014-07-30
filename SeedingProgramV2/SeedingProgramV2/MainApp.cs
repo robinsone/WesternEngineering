@@ -236,8 +236,15 @@ namespace SeedingProgramV2
                             if (result.Properties.Contains("initials")) { objSurveyUsers.MiddleName = (String)result.Properties["initials"][0]; }
                             objSurveyUsers.Username = (String)result.Properties["samaccountname"][0];
                             objSurveyUsers.ProfilePath = (String)result.Properties["profilepath"][0];
-                            objSurveyUsers.HDrive = (String)result.Properties["homedirectory"][0];
-                            objSurveyUsers.LastLogin = DateTime.FromFileTime(Convert.ToInt64(result.Properties["lastlogon"][0].ToString()));
+                            if(result.Properties.Contains("homedirectory")){ objSurveyUsers.HDrive = (String)result.Properties["homedirectory"][0];}
+                            try{
+                            if (result.Properties.Contains("lastlogontimestamp")){ objSurveyUsers.LastLogin = DateTime.FromFileTime(Convert.ToInt64(result.Properties["lastlogontimestamp"][0].ToString()));}
+                            }
+                            catch (Exception ex)
+                            {
+                                //donothing
+                            }
+
                             if (result.Path.Contains("ugrad"))
                             {
                                 objSurveyUsers.Grad = "UGRD";

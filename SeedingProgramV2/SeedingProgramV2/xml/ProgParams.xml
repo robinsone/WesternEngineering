@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ProgParams xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <ServerConnectionString>192.168.0.113</ServerConnectionString>
-  <FolderPath>\\192.168.0.113\shared</FolderPath>
+  <ServerConnectionString>129.100.225.200</ServerConnectionString>
+  <FolderPath>\\129.100.225.240\es1</FolderPath>
   <IsSet>true</IsSet>
   <UserAccount>Administrator</UserAccount>
-  <UserPassword>EAAAAHinBFdKvCImuLAYU0/Z+qLAheMKRQSrgv9mKBZEzqsV</UserPassword>
+  <UserPassword>EAAAAJpfvXFuIsfhmrm2zvTagcNfySQT24aJyudo8jj4x4iz</UserPassword>
 </ProgParams>
