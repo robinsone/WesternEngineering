@@ -38,6 +38,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.txtAdminPassword = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.txtBackupFolder = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -59,7 +61,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(491, 116);
+            this.button1.Location = new System.Drawing.Point(490, 273);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 2;
@@ -69,7 +71,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(410, 116);
+            this.button2.Location = new System.Drawing.Point(409, 273);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 3;
@@ -132,12 +134,32 @@
             this.label4.Text = "Administrator Password:";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // txtBackupFolder
+            // 
+            this.txtBackupFolder.Location = new System.Drawing.Point(164, 116);
+            this.txtBackupFolder.Name = "txtBackupFolder";
+            this.txtBackupFolder.Size = new System.Drawing.Size(402, 20);
+            this.txtBackupFolder.TabIndex = 11;
+            this.txtBackupFolder.TextChanged += new System.EventHandler(this.txtBackupFolder_TextChanged);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(57, 119);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(104, 13);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "Backup Folder Path:";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // Parameters
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.ClientSize = new System.Drawing.Size(577, 146);
+            this.ClientSize = new System.Drawing.Size(577, 308);
+            this.Controls.Add(this.txtBackupFolder);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.txtAdminPassword);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.txtAdminAccount);
@@ -168,5 +190,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtAdminPassword;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox txtBackupFolder;
+        private System.Windows.Forms.Label label5;
     }
 }

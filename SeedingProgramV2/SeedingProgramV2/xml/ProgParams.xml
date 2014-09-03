@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ProgParams xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ServerConnectionString>129.100.225.200</ServerConnectionString>
-  <FolderPath>\\129.100.225.240\es1</FolderPath>
+  <FolderPath>\\129.100.225.240\es1\</FolderPath>
   <IsSet>true</IsSet>
+  <BackupFolder>\\129.100.225.240\old_Students</BackupFolder>
   <UserAccount>Administrator</UserAccount>
-  <UserPassword>EAAAAJpfvXFuIsfhmrm2zvTagcNfySQT24aJyudo8jj4x4iz</UserPassword>
+  <UserPassword>EAAAALQ4VrFYycRjJTdRX97W81hCL0ZsVPUbDDJgqDRdW9lx</UserPassword>
 </ProgParams>

@@ -36,6 +36,14 @@ namespace SeedingProgramV2
             set { _isSet = value; }
         }
 
+        private string _BackupFolder;
+
+        public string BackupFolder
+        {
+            get { return _BackupFolder; }
+            set { _BackupFolder = value; }
+        }
+
         private string _UserAccount;
 
         public string UserAccount
@@ -61,6 +69,8 @@ namespace SeedingProgramV2
         {
             return Crypto.EncryptStringAES(this.UserPassword,"F32491AB72");
         }
+
+
 
         public void Save() {
             

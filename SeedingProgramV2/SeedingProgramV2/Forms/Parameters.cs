@@ -72,6 +72,11 @@ namespace SeedingProgramV2
             this.ProgParams.UserPassword = txtAdminPassword.Text;
         }
 
+        private void txtBackupFolder_TextChanged(object sender, EventArgs e)
+        {
+            this.ProgParams.BackupFolder = txtBackupFolder.Text;
+        }
+
         
     }
 }

@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Classes\ADUsers.cs" />
     <Compile Include="Classes\Crypto.cs" />
+    <Compile Include="Classes\Shares.cs" />
     <Compile Include="MainApp.cs">
       <SubType>Form</SubType>
     </Compile>

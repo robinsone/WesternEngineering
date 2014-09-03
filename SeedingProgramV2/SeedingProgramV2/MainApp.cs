@@ -23,7 +23,7 @@ namespace SeedingProgramV2
     public partial class MainApp : Form
     {
         private static SortableBindingList<ADUsers> Users = new SortableBindingList<ADUsers>();
-        private static DirectoryInfo[] folders;
+        private static List<DirectoryInfo> folders = new List<DirectoryInfo>();
         private static ProgParams ProgParams = new ProgParams();
 
         public MainApp()
@@ -179,10 +179,13 @@ namespace SeedingProgramV2
 
                 if (grad.Count > 0 && ugrad.Count > 0)
                 {
-                    toolStripComboBox1.ComboBox.DataSource = grad;
+                    List<OU> SortedgradList = grad.OrderBy(o => o.Name).ToList();
+                    List<OU> SortedugradList = ugrad.OrderBy(o => o.Name).ToList();
+
+                    toolStripComboBox1.ComboBox.DataSource = SortedgradList;
                     toolStripComboBox1.ComboBox.DisplayMember = "name";
 
-                    toolStripComboBox2.ComboBox.DataSource = ugrad;
+                    toolStripComboBox2.ComboBox.DataSource = SortedugradList;
                     toolStripComboBox2.ComboBox.DisplayMember = "name";
                 }
             }
@@ -231,11 +234,11 @@ namespace SeedingProgramV2
                             objSurveyUsers.Path = (string)result.Path;
                             objSurveyUsers.Sid = (byte[])result.Properties["objectSid"][0];
                             objSurveyUsers.Email = (String)result.Properties["mail"][0];
-                            objSurveyUsers.FirstName = (String)result.Properties["givenname"][0];
-                            objSurveyUsers.LastName = (String)result.Properties["sn"][0];
+                            if (result.Properties.Contains("givenname")) { objSurveyUsers.FirstName = (String)result.Properties["givenname"][0]; }
+                            if (result.Properties.Contains("sn")) { objSurveyUsers.LastName = (String)result.Properties["sn"][0]; }
                             if (result.Properties.Contains("initials")) { objSurveyUsers.MiddleName = (String)result.Properties["initials"][0]; }
-                            objSurveyUsers.Username = (String)result.Properties["samaccountname"][0];
-                            objSurveyUsers.ProfilePath = (String)result.Properties["profilepath"][0];
+                            if (result.Properties.Contains("samaccountname")) { objSurveyUsers.Username = (String)result.Properties["samaccountname"][0]; }
+                            if (result.Properties.Contains("profilepath")) {objSurveyUsers.ProfilePath = (String)result.Properties["profilepath"][0];}
                             if(result.Properties.Contains("homedirectory")){ objSurveyUsers.HDrive = (String)result.Properties["homedirectory"][0];}
                             try{
                             if (result.Properties.Contains("lastlogontimestamp")){ objSurveyUsers.LastLogin = DateTime.FromFileTime(Convert.ToInt64(result.Properties["lastlogontimestamp"][0].ToString()));}
@@ -578,10 +581,48 @@ namespace SeedingProgramV2
                 UserImpersonation impersonator = new UserImpersonation();
                 impersonator.impersonateUser(ProgParams.UserAccount, "", ProgParams.UserPassword); //No Domain is required
 
-
+                string folderPath = ProgParams.FolderPath.Substring(0, 18);
                 DirectoryInfo directory = new DirectoryInfo(ProgParams.FolderPath);
 
-                folders = directory.GetDirectories();
+                ShareCollection shi = ShareCollection.GetShares(folderPath);
+                if (shi != null)
+                {
+                    foreach (Share si in shi)
+                    {
+                        Console.WriteLine("{0}: {1} [{2}]",
+                            si.ShareType, si, si.Path);
+
+                        DirectoryInfo d = new DirectoryInfo(si.ToString());
+                        if (d.Name.Contains("es"))
+                        {
+                            folders.Add(d);
+                        }
+                        // If this is a file-system share, try to
+                        // list the first five subfolders.
+                        // NB: If the share is on a removable device,
+                        // you could get "Not ready" or "Access denied"
+                        // exceptions.
+                        //if (si.IsFileSystem)
+                        //{
+                        //    try
+                        //    {
+                        //        System.IO.DirectoryInfo d = si.Root;
+                        //        System.IO.DirectoryInfo[] Flds = d.GetDirectories();
+                        //        for (int i = 0; i < Flds.Length && i < 5; i++)
+                        //            Console.WriteLine("\t{0} - {1}", i, Flds[i].FullName);
+
+                        //        Console.WriteLine();
+                        //    }
+                        //    catch (Exception ex)
+                        //    {
+                        //        Console.WriteLine("\tError listing {0}:\n\t{1}\n",
+                        //            si, ex.Message);
+                        //    }
+                        //}
+                    }
+                }
+
+                //folders = directory.Parent.GetDirectories();
                 impersonator.undoimpersonateUser();
             }
             catch (IOException)
@@ -598,7 +639,7 @@ namespace SeedingProgramV2
 
             DirectoryInfo directory = new DirectoryInfo(ProgParams.FolderPath);
 
-            folders = directory.GetDirectories();
+            //folders = directory.GetDirectories();
 
             foreach (DirectoryInfo folder in folders)
             {
@@ -662,13 +703,13 @@ namespace SeedingProgramV2
                             newUser.Properties["samAccountName"].Value = user.Username;
                             newUser.Properties["userprincipalname"].Value = user.Username + "@eng.western";
                             newUser.Properties["mail"].Value = user.Email;
-                            newUser.Properties["givenname"].Value = user.FirstName;
+                            newUser.Properties["givenname"].Value = user.FirstName + " " + user.MiddleName;
                             newUser.Properties["sn"].Value = user.LastName;
-                            newUser.Properties["initials"].Value = user.MiddleName;
+                            //newUser.Properties["initials"].Value = user.MiddleName;
                             newUser.Properties["profilepath"].Value = user.ProfilePath;
                             newUser.Properties["homedirectory"].Value = user.HDrive;
                             newUser.Properties["homeDrive"].Value = "H:";
-                            newUser.Properties["displayname"].Value = user.FirstName + " " + user.LastName;
+                            newUser.Properties["displayname"].Value = user.FirstName + " " + user.MiddleName + " " + user.LastName;
                             //newUser.Properties["name"].Value = user.FirstName + " " + user.MiddleName + " " + user.LastName;
                             newUser.Properties["scriptPath"].Value = "login.bat";
 
@@ -729,13 +770,13 @@ namespace SeedingProgramV2
                                 newUser.Properties["samAccountName"].Value = user.Username;
                                 newUser.Properties["userprincipalname"].Value = user.Username + "@eng.western";
                                 newUser.Properties["mail"].Value = user.Email;
-                                newUser.Properties["givenname"].Value = user.FirstName;
+                                newUser.Properties["givenname"].Value = user.FirstName + " " + user.MiddleName;
                                 newUser.Properties["sn"].Value = user.LastName;
-                                newUser.Properties["initials"].Value = user.MiddleName;
+                                //newUser.Properties["initials"].Value = user.MiddleName;
                                 newUser.Properties["profilepath"].Value = user.ProfilePath;
                                 newUser.Properties["homedirectory"].Value = user.HDrive;
                                 newUser.Properties["homeDrive"].Value = "H:";
-                                newUser.Properties["displayname"].Value = user.FirstName + " " + user.LastName;
+                                newUser.Properties["displayname"].Value = user.FirstName + " " + user.MiddleName + " " + user.LastName;
                                 //newUser.Properties["name"].Value = user.FirstName + " " + user.MiddleName + " " + user.LastName;
                                 newUser.Properties["scriptPath"].Value = "login.bat";
 
@@ -963,8 +1004,8 @@ namespace SeedingProgramV2
             impersonator.impersonateUser(ProgParams.UserAccount, "", ProgParams.UserPassword);//No Domain is required
             try
             {
-
-                string dest = @"\\192.168.0.111\backups\" + user.Username;
+                //\\192.168.0.111\backups
+                string dest = ProgParams.BackupFolder + @"\" + user.Username;
                 System.IO.Directory.CreateDirectory(dest);
                 System.IO.Directory.CreateDirectory(dest + "\\HDrive");
                 System.IO.Directory.CreateDirectory(dest + "\\Profile");
