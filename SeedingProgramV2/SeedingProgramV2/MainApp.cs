@@ -234,6 +234,7 @@ namespace SeedingProgramV2
                             objSurveyUsers.Path = (string)result.Path;
                             objSurveyUsers.Sid = (byte[])result.Properties["objectSid"][0];
                             objSurveyUsers.Email = (String)result.Properties["mail"][0];
+                            objSurveyUsers.UserDN = (string)result.Path;
                             if (result.Properties.Contains("givenname")) { objSurveyUsers.FirstName = (String)result.Properties["givenname"][0]; }
                             if (result.Properties.Contains("sn")) { objSurveyUsers.LastName = (String)result.Properties["sn"][0]; }
                             if (result.Properties.Contains("initials")) { objSurveyUsers.MiddleName = (String)result.Properties["initials"][0]; }
@@ -513,10 +514,10 @@ namespace SeedingProgramV2
                                     user.LastName = row[2];
                                     user.FirstName = row[3];
                                     user.MiddleName = row[4];
-                                    if (user.MiddleName.Length >= 6)
-                                    {
-                                        user.MiddleName = user.MiddleName.Substring(0, 1);
-                                    }
+                                    //if (user.MiddleName.Length >= 6)
+                                    //{
+                                    //    user.MiddleName = user.MiddleName.Substring(0, 1);
+                                    //}
                                     user.Email = row[5] + "@uwo.ca";
                                     user.ExistsInCSVFile = true;
                                     user.Username = row[5];
@@ -581,10 +582,10 @@ namespace SeedingProgramV2
                 UserImpersonation impersonator = new UserImpersonation();
                 impersonator.impersonateUser(ProgParams.UserAccount, "", ProgParams.UserPassword); //No Domain is required
 
-                string folderPath = ProgParams.FolderPath.Substring(0, 18);
-                DirectoryInfo directory = new DirectoryInfo(ProgParams.FolderPath);
+                //string folderPath = ProgParams.FolderPath.Substring(0, 18);
+               // DirectoryInfo directory = new DirectoryInfo(ProgParams.FolderPath);
 
-                ShareCollection shi = ShareCollection.GetShares(folderPath);
+                ShareCollection shi = ShareCollection.GetShares(ProgParams.FolderPath);
                 if (shi != null)
                 {
                     foreach (Share si in shi)
@@ -698,6 +699,14 @@ namespace SeedingProgramV2
                     {
                         if (user.ProfilePath != null && user.HDrive != null)
                         {
+                            // set up domain context
+                            
+
+                            // create a user principal object
+                            
+
+
+
                             DirectoryEntry dirEntry = new DirectoryEntry(user.Path);
                             DirectoryEntry newUser = dirEntry.Children.Add("CN=" + user.Username, "user");
                             newUser.Properties["samAccountName"].Value = user.Username;
@@ -721,14 +730,32 @@ namespace SeedingProgramV2
                             newUser.Properties["displayname"].Value = user.FirstName + " " + user.LastName;
                             int val = (int)newUser.Properties["userAccountControl"].Value;
                             newUser.Properties["userAccountControl"].Value = val & ~0x2; //enable account
+                            //newUser.Properties["memberOf"].Add("students");
                             newUser.CommitChanges();
+                            
+                            //foreach (string value in StudentsGroup.Properties.PropertyNames)
+                            //{
+                            //    // Do something with the value
+                            //    Console.WriteLine(value);
+
+                            //}
+                            //StudentsGroup.Properties["member"].Add(newUser.Path);
+                            
                             dirEntry.Close();
                             newUser.Close();
                             user.Sid = (byte[])newUser.Properties["objectSid"][0];
+                            //DirectoryEntry StudentsGroup = new DirectoryEntry("LDAP://" + @"ebithp-d2a/OU=students,DC=eng,DC=western");
+                            //StudentsGroup.Invoke("Member", new object[] { newUser.Path });
+                            //StudentsGroup.CommitChanges();
+                            //StudentsGroup.Close();
                             user.ExistsInActiveDirectory = true;
+                            AddToGroup(user.Username);
                             SetFolders(user);
 
                             row.Selected = false;
+
+
+                           
                         }
                         else
                         {
@@ -745,7 +772,33 @@ namespace SeedingProgramV2
             catch (System.DirectoryServices.DirectoryServicesCOMException E)
             {
                 //DoSomethingwith --> E.Message.ToString();
+                Console.WriteLine(E.Message);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
 
+        public void AddToGroup(string username)
+        {
+            
+            try
+            {
+                PrincipalContext ctx = new PrincipalContext(ContextType.Domain, "ENG.WESTERN");
+                UserPrincipal user2 = UserPrincipal.FindByIdentity(ctx, username);
+                GroupPrincipal group = GroupPrincipal.FindByIdentity(ctx, "students");
+                group.Members.Add(user2);
+                group.Save();
+            }
+            catch (System.DirectoryServices.DirectoryServicesCOMException E)
+            {
+                Console.WriteLine(E.Message);
+
+            }
+            finally
+            {
+                
             }
         }
 

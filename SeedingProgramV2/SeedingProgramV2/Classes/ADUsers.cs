@@ -21,7 +21,7 @@ namespace SeedingProgramV2
         private string _old;
         private string _path;
         private byte[] _sid;
-
+        private string _userDN;
 
 
       
@@ -56,6 +56,12 @@ namespace SeedingProgramV2
         {
             get { return _username; }
             set { _username = value; }
+        }
+
+        public string UserDN
+        {
+            get { return _userDN; }
+            set { _userDN = value; }
         }
 
         public string FirstName
