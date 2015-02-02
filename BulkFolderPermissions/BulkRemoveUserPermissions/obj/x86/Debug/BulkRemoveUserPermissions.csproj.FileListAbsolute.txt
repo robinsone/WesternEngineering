@@ -1,0 +1,5 @@
+C:\Documents and Settings\itg-erobin26\Local Settings\Application Data\Temporary Projects\BulkRemoveUserPermissions\bin\Debug\BulkRemoveUserPermissions.exe
+C:\Documents and Settings\itg-erobin26\Local Settings\Application Data\Temporary Projects\BulkRemoveUserPermissions\bin\Debug\BulkRemoveUserPermissions.pdb
+C:\Documents and Settings\itg-erobin26\Local Settings\Application Data\Temporary Projects\BulkRemoveUserPermissions\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\itg-erobin26\Local Settings\Application Data\Temporary Projects\BulkRemoveUserPermissions\obj\x86\Debug\BulkRemoveUserPermissions.exe
+C:\Documents and Settings\itg-erobin26\Local Settings\Application Data\Temporary Projects\BulkRemoveUserPermissions\obj\x86\Debug\BulkRemoveUserPermissions.pdb
