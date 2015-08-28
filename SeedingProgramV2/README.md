@@ -15,7 +15,7 @@ When you start the program, you'll want to enter the options to find your Active
 
 ```
     - example settings:
-        + ldap string : 192.168.0.111 or ebithp3-b4
+        + ldap string : 192.168.0.111 or ServerName
         + Shared Folders: 192.168.0.111\shared *preferable with the same admin account
         + Admin Account: Administrator
         + Admin Password: 123456
@@ -27,5 +27,21 @@ Once you're at this point the program should be ready to go, assuming the settin
 
 #### Uploading CSV ####
 Use the excel file given to you by the registrar's office. Open it in excel and than save it as a `Comma Seperated Values (.csv)` file. Then goto `"File > Upload CSV"`. 
+
+#### Instructions By Lyle ####
+- DOWNLOAD THE LATEST .ZIP FROM GITHUB
+- Make sure Options are set to ScreenShot
+- File -> Connect to Server
+- File -> Upload .CSV
+  - Student#, GRAD/UGRAD, LastName, FirstName, MiddleName, Username
+- Select Group from drop down and click Apply, You can verify this step by looking at the H: DRIVE Path in the grid
+- Select Users to import
+- Action -> Add Selected Users
+  - You should see the grey rows become purple, this will indicate user was added. 
+  
+Notes: It's a good idea to add one user to test and make sure everything is working as expected
+
+
+
 
 
